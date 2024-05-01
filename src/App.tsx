@@ -1,15 +1,22 @@
-// create login screen just skeleton
-// create screen that has cart where they can oay with mybalance
-//  create screen to connect to mybalance
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoginForm from "./pages/Login";
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
 
 function App() {
-
-
   return (
-    <div>
-      <p className="text-red-600">here</p>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
+
+// create login screen just skeleton
+// create screen that has cart where they can pay with mybalance
+// create screen to connect to mybalance
