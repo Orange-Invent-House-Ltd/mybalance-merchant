@@ -1,41 +1,47 @@
 // LoginForm.tsx
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useLogin } from "../hooks/mutate";
+import { useNavigate } from "react-router-dom";
 
 type LoginFormInputs = {
-  username: string;
+  email: string;
   password: string;
 };
 
 const LoginForm: React.FC = () => {
+  const {mutate} = useLogin()
   const {
     register,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInputs>();
+  const navigate = useNavigate()
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
-    console.log(data);
-    // You can perform login logic here
-  };
+  const login: SubmitHandler<LoginFormInputs> = async(data) =>{
+    // mutate(data)
+    // localStorage.setItem("merchantId", 'adbc5c96-f8ba-4a01-8383-58bf5241b05c');
+    localStorage.setItem("email", getValues('email'));
+    navigate("/home");
+  }
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(login)}
       className="max-w-sm mx-auto mt-[8rem] border p-5 rounded-xl"
     >
       <div className="mb-4">
         <label htmlFor="username" className="block mb-2">
-          Username
+          Email
         </label>
         <input
           type="text"
-          id="username"
-          {...register("username", { required: true })}
+          {...register("email", { required: true })}
           className="w-full px-3 py-2 border rounded-md"
         />
-        {errors.username && (
-          <span className="text-red-500">Username is required</span>
+        {errors.email && (
+          <span className="text-red-500">Email is required</span>
         )}
       </div>
       <div className="mb-4">
@@ -44,7 +50,6 @@ const LoginForm: React.FC = () => {
         </label>
         <input
           type="password"
-          id="password"
           {...register("password", { required: true })}
           className="w-full px-3 py-2 border rounded-md"
         />

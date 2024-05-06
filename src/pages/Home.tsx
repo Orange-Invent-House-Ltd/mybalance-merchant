@@ -6,18 +6,19 @@ import laptop3Image from "../assets/images/laptop3.jpeg";
 import shoe1Image from "../assets/images/sheo1.jpeg";
 import shoe2Image from "../assets/images/sheo2.jpeg";
 import Cart from "./Cart";
+import { useGenerateWidget } from "../hooks/mutate";
+import useStore from "../store";
+import { publicApi } from "../api/axios";
+import { toast } from "react-toastify";
 
 const Home: React.FC = () => {
+  const {mutate} = useGenerateWidget()
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [dataCart, setDataCart] = useState<any[]>(cartData); // Data to display products
+  const store = useStore()
+  const [url, setUrl] = useState('')
+  const API_KEY = import.meta.env.VITE_API_KEY
 
-  useEffect(() => {
-    // Update localStorage when cartItems change
-    const storedCart = localStorage.getItem("cartItems");
-    if (storedCart) {
-      setCartItems(JSON.parse(storedCart));
-    }
-  }, []);
 
   const handleAddToCart = (item: any) => {
     const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
@@ -31,9 +32,51 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleConnectToBalance = () => {
-    console.log("Connect to MyBalance clicked");
+  // const connectToBalance = async() => {
+  //   mutate({
+  //     customerEmail: localStorage.getItem('email')
+  //   })
+  // };
+
+  const connectToBalance  = async () => {
+    try {
+      const res = await publicApi.post("/merchants/generate-widget-session", 
+        {
+          customerEmail: localStorage.getItem('email')
+        }, 
+        {
+          headers: {
+            'Authorization': API_KEY,
+          }
+        }
+      );
+      setUrl(res.data.data.url)
+      const url = res.data.data.url
+      const startString = "unlock-fund/";
+      // Find the index of the starting string
+      const startIndex = url.indexOf(startString);
+      // Calculate the start of the substring (position after "unlock-fund/")
+      const extractStartIndex = startIndex + startString.length;
+      // Extract the substring from the calculated start index to the end of the URL
+      const extractedValue = url.substring(extractStartIndex);
+      localStorage.setItem("key", extractedValue);
+      store.setWidget(true)
+      toast.success(res.data.message);
+    } catch (error: any) {
+        let resMessage;
+        error.response.data.errors === null ? resMessage = error.response.data.message : 
+        resMessage = error.response.data.errors.error
+        toast.error(resMessage);
+    }
   };
+
+  useEffect(() => {
+    // Update localStorage when cartItems change
+    const storedCart = localStorage.getItem("cartItems");
+    if (storedCart) {
+      setCartItems(JSON.parse(storedCart));
+    }
+  }, []);
 
   return (
     <div>
@@ -52,7 +95,7 @@ const Home: React.FC = () => {
                 className="w-full h-[250px] mb-2 rounded-lg"
               />
               <div className="text-lg font-semibold">{item.name}</div>
-              <div className="text-gray-600">${item.price}</div>
+              <div className="text-gray-600">₦{item.price}</div>
               <button
                 onClick={() => handleAddToCart(item)}
                 className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -64,13 +107,21 @@ const Home: React.FC = () => {
         </div>
         <div className="flex justify-center items-center mt-8 bg-slate-800 p-[4rem] mb-[4rem] rounded-lg">
           <button
-            onClick={handleConnectToBalance}
+            onClick={connectToBalance}
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
           >
             Connect to MyBalance
           </button>
         </div>
       </div>
+      {store.widget && (
+        // <div className="animate-jump fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px] py-8">
+        // <div className="w-fit mx-auto py-4 rounded-[16px] h-[100%] bg-white z-50 overflow-y-scroll no-scrollbar">
+          <iframe src={url} frameBorder="0" width={800} height={1000}>
+          </iframe>
+        // </div>
+        // </div>
+      )}
     </div>
   );
 };
