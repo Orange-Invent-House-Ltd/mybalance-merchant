@@ -82,7 +82,7 @@ const Cart: React.FC<any> = () => {
               Pay Now
             </button>
             <button
-              onClick={()=>setModal(true)}
+              onClick={handlePayWithBalance}
               className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 "
             >
               Pay with MyBalance
@@ -90,7 +90,7 @@ const Cart: React.FC<any> = () => {
           </div>
         </div>
       </div>
-      {modal && (
+      {/* {modal && (
         <div className="animate-jump fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px] py-8">
         <div className="w-[450px] mx-auto px-6 py-4 rounded-[16px] h-[350px] bg-white z-50 overflow-y-scroll no-scrollbar">
           <h2 className="text-lg font-medium mb-2">
@@ -115,7 +115,7 @@ const Cart: React.FC<any> = () => {
           </div>
         </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

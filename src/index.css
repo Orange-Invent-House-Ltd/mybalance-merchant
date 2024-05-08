@@ -11,3 +11,15 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+iframe::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar in WebKit browsers */
+}
+iframe {
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Hide the scrollbar in Firefox */
+}
+iframe {
+  overflow: hidden;
+  border: none;
+}

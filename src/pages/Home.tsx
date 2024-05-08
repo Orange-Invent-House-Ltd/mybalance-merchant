@@ -10,11 +10,13 @@ import { useGenerateWidget } from "../hooks/mutate";
 import useStore from "../store";
 import { publicApi } from "../api/axios";
 import { toast } from "react-toastify";
+import { X } from "lucide-react";
 
 const Home: React.FC = () => {
   const {mutate} = useGenerateWidget()
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [dataCart, setDataCart] = useState<any[]>(cartData); // Data to display products
+  const [widget, setWidget] = useState(false)
   const store = useStore()
   const [url, setUrl] = useState('')
   const API_KEY = import.meta.env.VITE_API_KEY
@@ -60,8 +62,10 @@ const Home: React.FC = () => {
       // Extract the substring from the calculated start index to the end of the URL
       const extractedValue = url.substring(extractStartIndex);
       localStorage.setItem("key", extractedValue);
-      store.setWidget(true)
-      toast.success(res.data.message);
+      setWidget(true)
+      // toast.success(res.data.message, {
+      //   toastId: 'success1'
+      // });
     } catch (error: any) {
         let resMessage;
         error.response.data.errors === null ? resMessage = error.response.data.message : 
@@ -114,13 +118,14 @@ const Home: React.FC = () => {
           </button>
         </div>
       </div>
-      {store.widget && (
-        // <div className="animate-jump fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px] py-8">
-        // <div className="w-fit mx-auto py-4 rounded-[16px] h-[100%] bg-white z-50 overflow-y-scroll no-scrollbar">
-          <iframe src={url} frameBorder="0" width={800} height={1000}>
-          </iframe>
-        // </div>
-        // </div>
+      {/* <X onClick={()=> setWidget(!widget)} className="w-fit absolute "/> */}
+      {widget && (
+        <div className="animate-jump fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px] py-8">
+        <div className="max-w-[800px] mx-auto py-4 rounded-[16px] h-[100%] bg-white z-50 overflow-y-scroll no-scrollbar">
+          <X onClick={()=> setWidget(!widget)} className="ml-auto mr-4 sticky top-0 no-scrollbar"/>
+          <iframe src={url} frameBorder="0" width="100%" height='100%' allowFullScreen></iframe>
+        </div>
+        </div>
       )}
     </div>
   );
