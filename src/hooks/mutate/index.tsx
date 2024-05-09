@@ -57,7 +57,6 @@ export const useGenerateWidget = () => {
       const extractedValue = url.substring(extractStartIndex);
       localStorage.setItem("key", extractedValue);
       localStorage.setItem("url", data.data.url);
-      store.setWidget(true)
       toast.success(data.message);
     },
     onError: (error: any) => {
@@ -77,7 +76,8 @@ export const useInitialEscrow = () => {
     mutationFn: initiateEscrow,
     onSuccess: (data) => {
       store.setPaymentBreakdown(data.data.paymentBreakdown)
-      window.open(data.data.link);
+      store.setPayModal(true)
+      store.setPaymentLink(data.data.link);
       toast.success(data.message);
     },
     onError: (error: any) => {

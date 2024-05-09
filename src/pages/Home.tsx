@@ -11,6 +11,7 @@ import useStore from "../store";
 import { publicApi } from "../api/axios";
 import { toast } from "react-toastify";
 import { X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
   const {mutate} = useGenerateWidget()
@@ -20,6 +21,7 @@ const Home: React.FC = () => {
   const store = useStore()
   const [url, setUrl] = useState('')
   const API_KEY = import.meta.env.VITE_API_KEY
+  const navigate = useNavigate()
 
 
   const handleAddToCart = (item: any) => {
@@ -117,12 +119,24 @@ const Home: React.FC = () => {
             Connect to MyBalance
           </button>
         </div>
+
+        
+        <button
+          onClick={()=> {
+            localStorage.clear()
+            navigate('/')
+          }}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 mb-8"
+        >
+          logout
+        </button>
+        
       </div>
       {/* <X onClick={()=> setWidget(!widget)} className="w-fit absolute "/> */}
       {widget && (
         <div className="animate-jump fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px] py-8">
         <div className="max-w-[800px] mx-auto py-4 rounded-[16px] h-[100%] bg-white z-50 overflow-y-scroll no-scrollbar">
-          <X onClick={()=> setWidget(!widget)} className="ml-auto mr-4 sticky top-0 no-scrollbar"/>
+          <X onClick={()=> setWidget(!widget)} className="ml-auto mr-4 sticky top-0 no-scrollbar text-red-600"/>
           <iframe src={url} frameBorder="0" width="100%" height='100%' allowFullScreen></iframe>
         </div>
         </div>
