@@ -54,7 +54,6 @@ const Cart: React.FC<any> = () => {
       store.setPaymentBreakdown(res.data.data.paymentBreakdown)
       store.setPayModal(true)
       setPaymentLink(res.data.data.link)
-      window.open(res.data.data.link);
       toast.success(res.data.message);
       
     } catch (error: any) {
@@ -134,8 +133,9 @@ const Cart: React.FC<any> = () => {
             Pay with MyBalance
           </h2>
           <p className="mt-1">Please confirm your payment detail below</p>
+
           <p className="mt-6">Cost of items: ₦{store.paymentBreakdown?.baseAmount}</p>
-          <p>Escrow Fees: ₦{store.paymentBreakdown?.buyerEscrowFees}</p>
+          <p>Escrow Fees: ₦{parseFloat(Number(store.paymentBreakdown?.buyerEscrowFees).toFixed(3))}</p>
           <p>Mercant Fees: ₦{store.paymentBreakdown?.buyerMerchantFees}</p>
           <p className="font-semibold">Total Payable: ₦{store.paymentBreakdown?.totalPayable}</p>
           <div className="flex items-center gap-x-4 mt-6">
@@ -145,7 +145,10 @@ const Cart: React.FC<any> = () => {
               Cancle
             </button>
             <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 "
-              onClick={()=>window.open(paymentLink)}
+              onClick={()=>{
+                window.open(paymentLink)
+                store.setPayModal(false)
+              }}
             >
               Continue
             </button>
