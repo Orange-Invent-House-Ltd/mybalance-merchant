@@ -42,7 +42,7 @@ const Cart: React.FC<any> = () => {
           itemQuantity: cart?.length,
           deliveryDate: today,
           amount: getTotalPrice(),
-          buyer: 'devtosxn@gmail.com',
+          buyer: localStorage.getItem('email'),
           seller: 'tosxnthedesigner@gmail.com',
         }, 
         {
