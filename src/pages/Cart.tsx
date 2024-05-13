@@ -54,7 +54,9 @@ const Cart: React.FC<any> = () => {
       store.setPaymentBreakdown(res.data.data.paymentBreakdown)
       store.setPayModal(true)
       setPaymentLink(res.data.data.link)
-      toast.success(res.data.message);
+      toast.success(res.data.message,{
+        toastId: 'success1'
+      });
       
     } catch (error: any) {
         let resMessage;
