@@ -144,7 +144,7 @@ const Cart: React.FC<any> = () => {
             <button className="border border-orange-500 px-4 py-2 rounded hover:text-white  hover:bg-orange-600"
               onClick={()=> store.setPayModal(false)}
             >
-              Cancle
+              Cancel
             </button>
             <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 "
               onClick={()=>{
