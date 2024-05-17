@@ -38,12 +38,12 @@ const Cart: React.FC<any> = () => {
       const res = await publicApi.post("/merchants/initiate-escrow", 
         {
           purpose: 'Test',
-          itemType: 'Cart Items',
+          itemType: 'Test Items',
           itemQuantity: cart?.length,
           deliveryDate: today,
           amount: getTotalPrice(),
           buyer: localStorage.getItem('email'),
-          seller: 'tosxnthedesigner@gmail.com',
+          seller: 'tben9889@gmail.com',
         }, 
         {
           headers: {
