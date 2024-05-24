@@ -12,27 +12,35 @@ import { publicApi } from "../api/axios";
 import { toast } from "react-toastify";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
+const today = moment().format("YYYY-MM-DD");
 
 const Home: React.FC = () => {
   const {mutate} = useGenerateWidget()
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  // const [cartItems, setCartItems] = useState<any[]>([]);
   const [dataCart, setDataCart] = useState<any[]>(cartData); // Data to display products
   const [widget, setWidget] = useState(false)
   const store = useStore()
   const [url, setUrl] = useState('')
   const API_KEY = import.meta.env.VITE_API_KEY
   const navigate = useNavigate()
-
+  // const today = moment().format("YYYY-MM-DD");
 
   const handleAddToCart = (item: any) => {
-    const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
+    const cartItems = store?.cartItems
+    const existingItem = cartItems.find((cartItem:any) => cartItem.id === item.id);
+    const nonExistItems = cartItems.filter((cartItem:any) => cartItem.id !== item.id);
     if (existingItem) {
-      alert("Item already in cart");
+      const newCartItems = [...nonExistItems, {...existingItem, itemQuantity: existingItem?.itemQuantity + 1, amount: existingItem?.amount + item?.amount}];
+      // localStorage.setItem("cartItems", JSON.stringify(newCartItems));
+      store.setCartItems(newCartItems)
+      alert("extra quantity added");
     } else {
-      const newCartItems = [...cartItems, item];
-      setCartItems(newCartItems);
+      const newCartItems = [...cartItems, {...item, itemQuantity: 1}];
+      // setCartItems(newCartItems);
+      store.setCartItems(newCartItems)
       alert("Item added to cart");
-      localStorage.setItem("cartItems", JSON.stringify(newCartItems));
+      // localStorage.setItem("cartItems", JSON.stringify(newCartItems));
     }
   };
 
@@ -76,13 +84,13 @@ const Home: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    // Update localStorage when cartItems change
-    const storedCart = localStorage.getItem("cartItems");
-    if (storedCart) {
-      setCartItems(JSON.parse(storedCart));
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Update localStorage when cartItems change
+  //   const storedCart = localStorage.getItem("cartItems");
+  //   if (storedCart) {
+  //     setCartItems(JSON.parse(storedCart));
+  //   }
+  // }, []);
 
   return (
     <div>
@@ -97,11 +105,12 @@ const Home: React.FC = () => {
             >
               <img
                 src={item.image}
-                alt={item.name}
+                alt={item.title}
                 className="w-full h-[250px] mb-2 rounded-lg"
               />
-              <div className="text-lg font-semibold">{item.name}</div>
-              <div className="text-gray-600">₦{item.price}</div>
+              <div className="text-lg font-semibold">{item.title}</div>
+              <p>{item?.description}</p>
+              <div className="text-gray-600">₦{item.amount}</div>
               <button
                 onClick={() => handleAddToCart(item)}
                 className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -145,13 +154,13 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
-
 const cartData = [
-  { id: 1, name: "Laptop 1", image: laptop1Image, price: 10 },
-  { id: 2, name: "Laptop 2", image: laptop2Image, price: 15 },
-  { id: 3, name: "Laptop 3", image: laptop3Image, price: 20 },
-  { id: 4, name: "Shoe 1", image: shoe1Image, price: 25 },
-  { id: 5, name: "Shoe 2", image: shoe2Image, price: 30 },
-  { id: 6, name: "Shoe 3", image: shoe1Image, price: 35 },
+  { id: 1, title: "Laptop 1", description: 'Hp corei7', image: laptop1Image, amount: 10, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
+  { id: 2, title: "Laptop 2", description: 'Hp corei5', image: laptop2Image, amount: 15, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
+  { id: 3, title: "Laptop 3", description: 'Dell 850', image: laptop3Image, amount: 20, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
+  { id: 4, title: "Shoe 1", description: 'Brown Office shoe', image: shoe1Image, amount: 25, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
+  { id: 5, title: "Shoe 2", description: 'white sneakers', image: shoe2Image, amount: 30, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
+  { id: 6, title: "Shoe 3", description: 'Brown Office shoe', image: shoe1Image, amount: 35, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
 ];
+
+export default Home;

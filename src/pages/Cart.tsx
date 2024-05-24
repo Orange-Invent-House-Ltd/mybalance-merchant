@@ -12,39 +12,73 @@ const Cart: React.FC<any> = () => {
   const [modal, setModal] = useState(false)
   const API_KEY = import.meta.env.VITE_API_KEY
   const [paymentLink, setPaymentLink] = useState('')
-  const [cart, setCart] = useState<
-    { id: number; name: string; image: string; price: number }[]
-  >([]);
   const today = moment().format("YYYY-MM-DD")
   const store = useStore()
+  const [setTransactions, setSetTransactions] = useState<any>({})
+  // const [cart, setCart] = useState<any[]>([]);
+  const cart = store?.cartItems;
 
-  useEffect(() => {
-    const storedCart = localStorage.getItem("cartItems");
-    if (storedCart) {
-      setCart(JSON.parse(storedCart));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedCart = store?.cartItems;
+  //   if (storedCart) {
+  //     // setCart(JSON.parse(storedCart));
+  //     setCart(storedCart);
+  //   }
+  // }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price, 0);
+    return cart.reduce((total:any, item:any) => total + item.amount, 0);
   };
 
   const handlePayNow = () => {
     // Implement pay now logic here
   };
 
+  function groupItemsBySeller() {
+    // Create the result object with buyer's email and an empty entities array
+    const result:any = {
+        buyer: email,
+        entities: []
+    };
+
+    // Create a map to track the index of each seller in the entities array
+    const sellerMap:any = {};
+
+    // Loop through each item in the input array
+    cart.forEach((item:any)=> {
+        const seller = item.seller;
+
+        // Check if the seller is already in the sellerMap
+        if (!sellerMap[seller]) {
+            // If seller is not in the map, get the new index for this seller
+            const sellerIndex = result.entities.length;
+
+            // Add the seller to the sellerMap with the current index
+            sellerMap[seller] = sellerIndex;
+
+            // Add a new object to the entities array with the seller's email and a new items array
+            result.entities.push({
+                seller: seller,
+                items: [item]
+            });
+        } else {
+            // If the seller is already in the map, get the existing index
+            const sellerIndex = sellerMap[seller];
+
+            // Push the current item to the existing items array for this seller
+            result.entities[sellerIndex].items.push(item);
+        }
+    });
+
+    // Return the result object with the grouped items
+    return result;
+}
+
   const handlePayWithBalance  = async () => {
+   const transactions = groupItemsBySeller()
     try {
       const res = await publicApi.post("/merchants/initiate-escrow", 
-        {
-          purpose: 'Test',
-          itemType: 'Test Items',
-          itemQuantity: cart?.length,
-          deliveryDate: today,
-          amount: getTotalPrice(),
-          buyer: localStorage.getItem('email'),
-          seller: 'tben9889@gmail.com',
-        }, 
+        transactions, 
         {
           headers: {
             'Authorization': API_KEY,
@@ -83,7 +117,7 @@ const Cart: React.FC<any> = () => {
       <Navbar />
       <div className="max-w-[70%] mx-auto mt-8">
         <h1 className="text-2xl font-semibold mb-4">Cart</h1>
-        {cart.map((item) => (
+        {cart.map((item:any) => (
           <div
             key={item.id}
             className="flex items-center justify-between border p-4 mb-4 bg-slate-100 rounded-2xl shadow-md"
@@ -96,20 +130,20 @@ const Cart: React.FC<any> = () => {
               />
               <div>
                 <div className="text-lg font-semibold">{item.name}</div>
-                <div className="text-gray-600">Price: ₦{item.price}</div>
+                <div className="text-gray-600">amount: ₦{item.amount/item?.itemQuantity}</div>
               </div>
             </div>
             <div>
-              <div>Quantity: 1</div>{" "}
+              <div>Quantity: {item?.itemQuantity}</div>{" "}
               {/* You can replace '1' with dynamic quantity */}
-              <div>Total: ₦{item.price * 1}</div>{" "}
+              <div>Total: ₦{item.amount * 1}</div>{" "}
               {/* You can replace '1' with dynamic quantity */}
             </div>
           </div>
         ))}
         <div className="mt-5 bg-slate-300 w-50 p-5 rounded-2xl mb-[5rem]">
           <div className="text-xl font-semibold mt-4">
-            Total Price: ₦{getTotalPrice()}
+            Total amount: ₦{getTotalPrice()}
           </div>
           <div className="flex justify-end mt-4">
             <button

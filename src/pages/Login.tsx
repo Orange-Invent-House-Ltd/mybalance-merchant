@@ -3,6 +3,7 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useLogin } from "../hooks/mutate";
 import { useNavigate } from "react-router-dom";
+import useStore from "../store";
 
 type LoginFormInputs = {
   email: string;
@@ -11,6 +12,7 @@ type LoginFormInputs = {
 
 const LoginForm: React.FC = () => {
   const {mutate} = useLogin()
+  const store = useStore()
   const {
     register,
     getValues,
@@ -23,6 +25,7 @@ const LoginForm: React.FC = () => {
     // mutate(data)
     // localStorage.setItem("merchantId", 'adbc5c96-f8ba-4a01-8383-58bf5241b05c');
     localStorage.setItem("email", getValues('email'));
+    store.setCartItems([])
     navigate("/home");
   }
 
