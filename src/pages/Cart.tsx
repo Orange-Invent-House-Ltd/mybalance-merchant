@@ -5,6 +5,7 @@ import moment from 'moment'
 import useStore from "../store";
 import { publicApi } from "../api/axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Cart: React.FC<any> = () => {
   const {mutate, isPending} = useInitialEscrow()
@@ -17,6 +18,7 @@ const Cart: React.FC<any> = () => {
   const [setTransactions, setSetTransactions] = useState<any>({})
   // const [cart, setCart] = useState<any[]>([]);
   const cart = store?.cartItems;
+  const navigate = useNavigate()
 
   // useEffect(() => {
   //   const storedCart = store?.cartItems;
@@ -192,6 +194,17 @@ const Cart: React.FC<any> = () => {
         </div>
         </div>
       )}
+      <div className="px-[5%]">
+        <button
+          onClick={()=> {
+            localStorage.clear()
+            navigate('/')
+          }}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 mb-8"
+        >
+          logout
+        </button>
+      </div>
     </div>
   );
 };

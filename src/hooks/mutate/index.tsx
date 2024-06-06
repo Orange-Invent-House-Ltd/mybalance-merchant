@@ -83,7 +83,7 @@ export const useInitialEscrow = () => {
     onError: (error: any) => {
       let resMessage;
       error.response.data.errors === null ? resMessage = error.response.data.message : 
-      resMessage = error.response.data.errors.error
+      resMessage = error.response.data.errors.error || error.response.data.errors.buyer[0]
       toast.error(resMessage);
     },
   });

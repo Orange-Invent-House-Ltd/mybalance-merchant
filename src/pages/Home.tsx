@@ -156,11 +156,11 @@ const Home: React.FC = () => {
 
 const cartData = [
   { id: 1, title: "Laptop 1", description: 'Hp corei7', image: laptop1Image, amount: 10, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
-  { id: 2, title: "Laptop 2", description: 'Hp corei5', image: laptop2Image, amount: 15, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
+  { id: 2, title: "Laptop 2", description: 'Hp corei5', image: laptop2Image, amount: 15, category: "SERVICE", deliveryDate:today, seller: 'jamiuaremu579@gmail.com'},
   { id: 3, title: "Laptop 3", description: 'Dell 850', image: laptop3Image, amount: 20, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
-  { id: 4, title: "Shoe 1", description: 'Brown Office shoe', image: shoe1Image, amount: 25, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
+  { id: 4, title: "Shoe 1", description: 'Brown Office shoe', image: shoe1Image, amount: 25, category: "SERVICE", deliveryDate:today, seller: 'jamiuaremu579@gmail.com'},
   { id: 5, title: "Shoe 2", description: 'white sneakers', image: shoe2Image, amount: 30, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
-  { id: 6, title: "Shoe 3", description: 'Brown Office shoe', image: shoe1Image, amount: 35, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
+  { id: 6, title: "Shoe 3", description: 'Brown Office shoe', image: shoe1Image, amount: 35, category: "SERVICE", deliveryDate:today, seller: 'jamiuaremu579@gmail.com'},
 ];
 
 export default Home;

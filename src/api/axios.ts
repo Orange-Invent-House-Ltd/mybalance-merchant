@@ -1,7 +1,6 @@
 import axios from "axios";
 //create an Axios instance with a config to prevent us from repeating these options in every request
 
-// const BASE_URL = "https://staging-api.mybalanceapp.com/v1";
 const BASE_URL = import.meta.env.VITE_BASE_URL
 
 export const publicApi = axios.create({
