@@ -143,14 +143,14 @@ const Home: React.FC = () => {
       {/* <div className="animate-jump fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px] py-8">
         <div className="max-w-[800px] mx-auto py-4 rounded-[16px] h-[100%] bg-white z-50 overflow-y-scroll no-scrollbar"></div></div> */}
       {widget && (
-        <div className="flex justify-center  animate-jump fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px] py-8">
+        <div className="flex justify-center animate-jump fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px] py-8">
         <div className='relative mt-6'>
           <button className=" bg-white h-10 absolute z-50 -top-10 -right-10 text-gray-500 hover:text-gray-700 cursor-pointer w-10 justify-center items-center mx-auto flex rounded-full"
             onClick={()=> setWidget(!widget)} 
           >
             <X className='text-primary-normal' />
           </button>
-          <div className="w-[350px] sm:w-[700px] md:[900px] h-[100%] mx-auto rounded-[16px] bg-white z-50 overflow-y-scroll">
+          <div className="w-[350px] sm:w-[700px] md:w-[900px] h-[100%] mx-auto rounded-[16px] bg-white z-50 overflow-y-scroll">
             <iframe 
               src={url} frameBorder="0" seamless={true}
               width={'100%'}
