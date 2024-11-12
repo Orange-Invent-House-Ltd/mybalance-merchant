@@ -21,3 +21,19 @@ html, body {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 }
+
+/* Scroll bar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #FD7E14;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ceb0fa;
+}
