@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import Navbar from "../component/nav";
 import laptop1Image from "../assets/images/laptop1.jpeg";
 import laptop2Image from "../assets/images/laptop2.jpeg";
@@ -92,6 +92,7 @@ const Home: React.FC = () => {
   //   }
   // }, []);
 
+
   return (
     <div>
       <Navbar />
@@ -128,8 +129,6 @@ const Home: React.FC = () => {
             Connect to MyBalance
           </button>
         </div>
-
-        
         <button
           onClick={()=> {
             localStorage.clear()
@@ -146,7 +145,11 @@ const Home: React.FC = () => {
         <div className="animate-jump fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-full bg-[#3a3a3a]/30 backdrop-blur-[8px] py-8">
         <div className="max-w-[800px] mx-auto py-4 rounded-[16px] h-[100%] bg-white z-50 overflow-y-scroll no-scrollbar">
           <X onClick={()=> setWidget(!widget)} className="ml-auto mr-4 sticky top-0 z-10 p-1 w-8 h-8 bg-red-50 text-red-600 cursor-pointer"/>
-          <iframe src={url} frameBorder="0" width="100%" height='100%' allowFullScreen></iframe>
+          <iframe 
+            src={url} frameBorder="0" seamless={true}
+            width={'100%'}
+            height={'100%'}
+          ></iframe>
         </div>
         </div>
       )}

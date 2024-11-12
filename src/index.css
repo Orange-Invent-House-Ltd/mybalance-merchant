@@ -12,14 +12,12 @@
   }
 }
 
-iframe::-webkit-scrollbar {
-  display: none; /* Hide the scrollbar in WebKit browsers */
+/* Hide scrollbar for content inside iframe */
+::-webkit-scrollbar {
+  display: none;
 }
-iframe {
-  -ms-overflow-style: none;
-  scrollbar-width: none; /* Hide the scrollbar in Firefox */
-}
-iframe {
-  overflow: hidden;
-  border: none;
+
+html, body {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
