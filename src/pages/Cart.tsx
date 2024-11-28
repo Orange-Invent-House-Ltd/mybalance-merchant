@@ -1,32 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../component/nav";
-import { useInitialEscrow } from "../hooks/mutate";
-import moment from 'moment'
 import useStore from "../store";
 import { publicApi } from "../api/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Cart: React.FC<any> = () => {
-  const {mutate, isPending} = useInitialEscrow()
   const email = localStorage.getItem('email')
-  const [modal, setModal] = useState(false)
   const API_KEY = import.meta.env.VITE_API_KEY
   const [paymentLink, setPaymentLink] = useState('')
-  const today = moment().format("YYYY-MM-DD")
   const store = useStore()
-  const [setTransactions, setSetTransactions] = useState<any>({})
-  // const [cart, setCart] = useState<any[]>([]);
+
   const cart = store?.cartItems;
   const navigate = useNavigate()
-
-  // useEffect(() => {
-  //   const storedCart = store?.cartItems;
-  //   if (storedCart) {
-  //     // setCart(JSON.parse(storedCart));
-  //     setCart(storedCart);
-  //   }
-  // }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   const getTotalPrice = () => {
     return cart.reduce((total:any, item:any) => total + item.amount, 0);
@@ -40,7 +26,8 @@ const Cart: React.FC<any> = () => {
     // Create the result object with buyer's email and an empty entities array
     const result:any = {
         buyer: email,
-        entities: []
+        entities: [],
+        redirectUrl: 'http://localhost:5173/home'
     };
 
     // Create a map to track the index of each seller in the entities array
@@ -48,28 +35,27 @@ const Cart: React.FC<any> = () => {
 
     // Loop through each item in the input array
     cart.forEach((item:any)=> {
-        const seller = item.seller;
+      const seller = item.seller;
+      // Check if the seller is already in the sellerMap
+      if (!sellerMap[seller]) {
+          // If seller is not in the map, get the new index for this seller
+          const sellerIndex = result.entities.length;
 
-        // Check if the seller is already in the sellerMap
-        if (!sellerMap[seller]) {
-            // If seller is not in the map, get the new index for this seller
-            const sellerIndex = result.entities.length;
+          // Add the seller to the sellerMap with the current index
+          sellerMap[seller] = sellerIndex;
 
-            // Add the seller to the sellerMap with the current index
-            sellerMap[seller] = sellerIndex;
+          // Add a new object to the entities array with the seller's email and a new items array
+          result.entities.push({
+              seller: seller,
+              items: [item]
+          });
+      } else {
+          // If the seller is already in the map, get the existing index
+          const sellerIndex = sellerMap[seller];
 
-            // Add a new object to the entities array with the seller's email and a new items array
-            result.entities.push({
-                seller: seller,
-                items: [item]
-            });
-        } else {
-            // If the seller is already in the map, get the existing index
-            const sellerIndex = sellerMap[seller];
-
-            // Push the current item to the existing items array for this seller
-            result.entities[sellerIndex].items.push(item);
-        }
+          // Push the current item to the existing items array for this seller
+          result.entities[sellerIndex].items.push(item);
+      }
     });
 
     // Return the result object with the grouped items
@@ -85,7 +71,7 @@ const Cart: React.FC<any> = () => {
           headers: {
             'Authorization': API_KEY,
           }
-        }
+        },
       );
       store.setPaymentBreakdown(res.data.data.paymentBreakdown)
       store.setPayModal(true)
