@@ -4,11 +4,14 @@ import useStore from "../store";
 import { publicApi } from "../api/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const Cart: React.FC<any> = () => {
   const email = localStorage.getItem('email')
   const API_KEY = import.meta.env.VITE_API_KEY
   const [paymentLink, setPaymentLink] = useState('')
+  const today  = moment().format("YYYY-MM-DD");
+  const tomorrow = moment().add(1, 'days').format("YYYY-MM-DD");
   const store = useStore()
 
   const cart = store?.cartItems;
@@ -27,7 +30,8 @@ const Cart: React.FC<any> = () => {
     const result:any = {
         buyer: email,
         entities: [],
-        redirectUrl: 'http://localhost:5173/home'
+        redirectUrl: 'http://localhost:5173/home',
+        deliveryDate: tomorrow,
     };
 
     // Create a map to track the index of each seller in the entities array
