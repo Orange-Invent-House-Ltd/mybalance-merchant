@@ -31,7 +31,6 @@ const Cart: React.FC<any> = () => {
         buyer: email,
         entities: [],
         redirectUrl: 'http://localhost:5173/home',
-        deliveryDate: tomorrow,
     };
 
     // Create a map to track the index of each seller in the entities array
@@ -91,18 +90,6 @@ const Cart: React.FC<any> = () => {
         toast.error(resMessage);
     }
   };
-
-  // const handlePayWithBalance = () => {
-  //   mutate({
-  //     purpose: 'Test',
-  //     itemType: 'Cart Items',
-  //     itemQuantity: cart?.length,
-  //     deliveryDate: today,
-  //     amount: getTotalPrice(),
-  //     buyer: 'devtosxn@gmail.com',
-  //     seller: 'tosxnthedesigner@gmail.com',
-  //   })
-  // };
 
   return (
     <div>

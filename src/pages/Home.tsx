@@ -13,11 +13,21 @@ import { toast } from "react-toastify";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-const today = moment().format("YYYY-MM-DD");
+
 
 const Home: React.FC = () => {
-  const {mutate} = useGenerateWidget()
-  // const [cartItems, setCartItems] = useState<any[]>([]);
+  const today = moment().format("YYYY-MM-DD");
+  const tomorrow = moment().add(1, 'days').format("YYYY-MM-DD");
+  const nextTommorrow = moment().add(2, 'days').format("YYYY-MM-DD");
+
+  const cartData = [
+    { id: 1, title: "Laptop 1", description: 'Hp corei7', image: laptop1Image, amount: 550, category: "SERVICE", deliveryDate:tomorrow, seller: 'jamiuaremu579@gmail.com'},
+    { id: 2, title: "Laptop 2", description: 'Hp corei5', image: laptop2Image, amount: 605, category: "SERVICE", deliveryDate:nextTommorrow, seller: 'jamiuaremu579@gmail.com'},
+    { id: 3, title: "Laptop 3", description: 'Dell 850', image: laptop3Image, amount: 520, category: "SERVICE", deliveryDate:tomorrow, seller: 'jamiuaremu579@gmail.com'},
+    { id: 4, title: "Shoe 1", description: 'Brown Office shoe', image: shoe1Image, amount: 625, category: "SERVICE", deliveryDate:nextTommorrow, seller:'jamiuaremu579@gmail.com'},
+    { id: 5, title: "Shoe 2", description: 'white sneakers', image: shoe2Image, amount: 730, category: "SERVICE", deliveryDate:tomorrow, seller: 'jamiuaremu579@gmail.com'},
+    { id: 6, title: "Shoe 3", description: 'Brown Office shoe', image: shoe1Image, amount: 535, category: "SERVICE", deliveryDate:nextTommorrow, seller: 'jamiuaremu579@gmail.com'},
+  ];
   const [dataCart, setDataCart] = useState<any[]>(cartData); // Data to display products
   const [widget, setWidget] = useState(false)
   const store = useStore()
@@ -32,23 +42,14 @@ const Home: React.FC = () => {
     const nonExistItems = cartItems.filter((cartItem:any) => cartItem.id !== item.id);
     if (existingItem) {
       const newCartItems = [...nonExistItems, {...existingItem, itemQuantity: existingItem?.itemQuantity + 1, amount: existingItem?.amount + item?.amount}];
-      // localStorage.setItem("cartItems", JSON.stringify(newCartItems));
       store.setCartItems(newCartItems)
       alert("extra quantity added");
     } else {
       const newCartItems = [...cartItems, {...item, itemQuantity: 1}];
-      // setCartItems(newCartItems);
       store.setCartItems(newCartItems)
       alert("Item added to cart");
-      // localStorage.setItem("cartItems", JSON.stringify(newCartItems));
     }
   };
-
-  // const connectToBalance = async() => {
-  //   mutate({
-  //     customerEmail: localStorage.getItem('email')
-  //   })
-  // };
 
   const connectToBalance  = async () => {
     try {
@@ -163,15 +164,5 @@ const Home: React.FC = () => {
     </div>
   );
 };
-
-const cartData = [
-  { id: 1, title: "Laptop 1", description: 'Hp corei7', image: laptop1Image, amount: 550, category: "SERVICE", deliveryDate:today, seller: 'jamiuaremu579@gmail.com'},
-  { id: 2, title: "Laptop 2", description: 'Hp corei5', image: laptop2Image, amount: 605, category: "SERVICE", deliveryDate:today, seller: 'jamiuaremu579@gmail.com'},
-  { id: 3, title: "Laptop 3", description: 'Dell 850', image: laptop3Image, amount: 520, category: "SERVICE", deliveryDate:today, seller: 'jamiuaremu579@gmail.com'},
-  { id: 4, title: "Shoe 1", description: 'Brown Office shoe', image: shoe1Image, amount: 625, category: "SERVICE", deliveryDate:today, seller:'jamiuaremu579@gmail.com'},
-  { id: 5, title: "Shoe 2", description: 'white sneakers', image: shoe2Image, amount: 730, category: "SERVICE", deliveryDate:today, seller: 'jamiuaremu579@gmail.com'},
-  { id: 6, title: "Shoe 3", description: 'Brown Office shoe', image: shoe1Image, amount: 535, category: "SERVICE", deliveryDate:today, seller: 'jamiuaremu579@gmail.com'},
-  // { id: 7, title: "cloth 2", description: 'white sneakers', image: shoe2Image, amount: 730, category: "SERVICE", deliveryDate:today, seller: 'tosxnthedesigner@gmail.com'},
-];
 
 export default Home;
