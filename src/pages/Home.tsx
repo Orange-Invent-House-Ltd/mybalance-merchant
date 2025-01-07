@@ -21,8 +21,8 @@ const Home: React.FC = () => {
   const nextTommorrow = moment().add(2, 'days').format("YYYY-MM-DD");
 
   const cartData = [
-    { id: 1, title: "Laptop 1", description: 'Hp corei7', image: laptop1Image, amount: 550, category: "SERVICE", deliveryDate:tomorrow, seller: 'jamiuaremu579@gmail.com'},
-    { id: 2, title: "Laptop 2", description: 'Hp corei5', image: laptop2Image, amount: 605, category: "SERVICE", deliveryDate:nextTommorrow, seller: 'jamiuaremu579@gmail.com'},
+    { id: 1, title: "Laptop 1", description: 'Hp corei7', image: laptop1Image, amount: 550, category: "SERVICE", deliveryDate:today, seller: 'jamiuaremu579@gmail.com'},
+    { id: 2, title: "Laptop 2", description: 'Hp corei5', image: laptop2Image, amount: 605, category: "SERVICE", deliveryDate:today, seller: 'jamiuaremu579@gmail.com'},
     { id: 3, title: "Laptop 3", description: 'Dell 850', image: laptop3Image, amount: 520, category: "SERVICE", deliveryDate:tomorrow, seller: 'jamiuaremu579@gmail.com'},
     { id: 4, title: "Shoe 1", description: 'Brown Office shoe', image: shoe1Image, amount: 625, category: "SERVICE", deliveryDate:nextTommorrow, seller:'jamiuaremu579@gmail.com'},
     { id: 5, title: "Shoe 2", description: 'white sneakers', image: shoe2Image, amount: 730, category: "SERVICE", deliveryDate:tomorrow, seller: 'jamiuaremu579@gmail.com'},
