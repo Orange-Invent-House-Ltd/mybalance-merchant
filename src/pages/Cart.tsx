@@ -5,6 +5,7 @@ import { publicApi } from "../api/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { formatToNairaCurrency } from "../component/formartCurrency";
 
 const Cart: React.FC<any> = () => {
   const email = localStorage.getItem('email')
@@ -149,13 +150,13 @@ const Cart: React.FC<any> = () => {
           </h2>
           <p className="mt-1">Please confirm your payment detail below</p>
 
-          <p className="mt-6">Cost of items: ₦{store.paymentBreakdown?.baseAmount}</p>
-          <p>Escrow Fees: ₦{parseFloat(Number(store.paymentBreakdown?.buyerEscrowFees).toFixed(3))}</p>
-          <p>Mercant Fees: ₦{store.paymentBreakdown?.buyerMerchantFees}</p>
-          <p className="font-semibold">Total Payable: ₦{store.paymentBreakdown?.totalPayable}</p>
+          <p className="mt-6">Cost of items: {formatToNairaCurrency(store?.paymentBreakdown?.baseAmount)}</p>
+          <p>Escrow Fees: {formatToNairaCurrency(store?.paymentBreakdown?.buyerEscrowFees)}</p>
+          <p>Merchant Fees: {formatToNairaCurrency(store?.paymentBreakdown?.buyerMerchantFees)}</p>
+          <p className="font-semibold">Total Payable: {formatToNairaCurrency(store?.paymentBreakdown?.totalPayable)}</p>
           <div className="flex items-center gap-x-4 mt-6">
             <button className="border border-orange-500 px-4 py-2 rounded hover:text-white  hover:bg-orange-600"
-              onClick={()=> store.setPayModal(false)}
+              onClick={()=> store?.setPayModal(false)}
             >
               Cancel
             </button>

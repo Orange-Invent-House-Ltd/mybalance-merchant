@@ -85,15 +85,6 @@ const Home: React.FC = () => {
     }
   };
 
-  // useEffect(() => {
-  //   // Update localStorage when cartItems change
-  //   const storedCart = localStorage.getItem("cartItems");
-  //   if (storedCart) {
-  //     setCartItems(JSON.parse(storedCart));
-  //   }
-  // }, []);
-
-
   return (
     <div>
       <Navbar />
