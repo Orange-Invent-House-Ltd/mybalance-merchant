@@ -31,7 +31,7 @@ const Cart: React.FC<any> = () => {
     const result:any = {
         buyer: email,
         entities: [],
-        redirectUrl: 'http://localhost:5173/home',
+        redirectUrl: 'https://staging-merchant-platform-mybalance.netlify.app/home',
     };
 
     // Create a map to track the index of each seller in the entities array

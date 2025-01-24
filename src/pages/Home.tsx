@@ -5,8 +5,6 @@ import laptop2Image from "../assets/images/laptop2.jpeg";
 import laptop3Image from "../assets/images/laptop3.jpeg";
 import shoe1Image from "../assets/images/sheo1.jpeg";
 import shoe2Image from "../assets/images/sheo2.jpeg";
-import Cart from "./Cart";
-import { useGenerateWidget } from "../hooks/mutate";
 import useStore from "../store";
 import { publicApi } from "../api/axios";
 import { toast } from "react-toastify";
